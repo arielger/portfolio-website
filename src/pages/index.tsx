@@ -9,6 +9,10 @@ import linkedinIcon from '../images/social-icons/linkedin-icon.png';
 import twitterIcon from '../images/social-icons/twitter-icon.png';
 import emailIcon from '../images/social-icons/email-icon.png';
 
+import { run as runAsciiArt } from '../modules/play.core/src/run';
+import * as asciiProgram from '../scripts/ascii-program';
+import { useEffect } from 'react';
+
 const redaction100 = localFont({
   src: '../styles/fonts/Redaction_100-Italic.woff2',
 });
@@ -22,6 +26,21 @@ const iconProps = {
 };
 
 export default function Home() {
+  useEffect(() => {
+    runAsciiArt(asciiProgram, {
+      fps: 20,
+      element: document.querySelector('pre'),
+      once: true,
+    })
+      .then(function (e) {
+        console.log(e);
+      })
+      .catch(function (e) {
+        console.warn(e.message);
+        console.log(e.error);
+      });
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -63,6 +82,7 @@ export default function Home() {
           <Image src={emailIcon} alt="Email icon" {...iconProps} />
         </a>
       </div>
+      <pre className={styles['ascii-container']}></pre>
     </div>
   );
 }

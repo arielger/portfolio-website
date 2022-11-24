@@ -7,6 +7,9 @@ body {
   background-color: black;
   color: white;
   height: 100%;
+  font-size: 1em;
+    line-height: 1.2;
+    font-family: 'Simple Console', monospace;
 }
 
 a {
