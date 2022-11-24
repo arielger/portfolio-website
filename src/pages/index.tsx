@@ -30,7 +30,6 @@ export default function Home() {
     runAsciiArt(asciiProgram, {
       fps: 20,
       element: document.querySelector('pre'),
-      once: true,
     })
       .then(function (e) {
         console.log(e);

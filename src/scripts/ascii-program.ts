@@ -1,7 +1,10 @@
 import { length } from '../modules/play.core/src/modules/vec2';
 
 // Globals have module scope
-const chars = '░▒▓▔▕▖▗▘▙▚▛▜▝▞▟';
+const chars = [...'░▒▓▔▕▖▗▘▙▚▛▜▝▞▟'].reverse();
+
+const map = (value: number, x1: number, y1: number, x2: number, y2: number) =>
+  ((value - x1) * (y2 - x2)) / (y1 - x1) + x2;
 
 // This is the main loop.
 // Character coordinates are passed in coord {x, y, index}.
@@ -19,5 +22,13 @@ export function main(coord: any, context: any, cursor: any, buffer: any) {
 
   const distance = length(st);
 
-  return distance < 0.9 ? chars[Math.floor(Math.random() * chars.length)] : ' ';
+  return distance < 0.9
+    ? chars[
+        (Math.round(map(distance, 0, 1, 0, chars.length)) +
+          context.frame +
+          coord.x +
+          coord.y) %
+          chars.length
+      ]
+    : ' ';
 }
