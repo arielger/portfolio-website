@@ -1,9 +1,9 @@
 import { GetStaticProps } from 'next';
-import { getSortedPostsData } from 'utils/posts';
-import { Post } from '@/types/blog';
+import { getSortedPostsData } from '@/utils/posts';
+import { IPost } from '@/types/blog';
 
 interface StaticProps {
-  posts: Post[];
+  posts: IPost[];
 }
 
 export const getStaticProps: GetStaticProps<StaticProps> = async () => {

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-import { Post } from '@/types/blog';
+import { IPost } from '@/types/blog';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -14,12 +14,10 @@ export function getSortedPostsData() {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
 
-    console.log('matterResult', matterResult);
-
     return {
       id,
       ...matterResult.data,
-    } as Post;
+    } as IPost;
   });
   return postsData.sort(({ date: a }, { date: b }) => {
     if (a < b) {
@@ -29,5 +27,27 @@ export function getSortedPostsData() {
     } else {
       return 0;
     }
+  });
+}
+
+export function getPostData(id: string) {
+  const fullPath = path.join(postsDirectory, `${id}.md`);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const matterResult = matter(fileContents);
+  return {
+    id,
+    ...matterResult.data,
+  } as IPost;
+}
+
+export function getAllPostIds() {
+  const fileNames = fs.readdirSync(postsDirectory);
+
+  return fileNames.map((fileName) => {
+    return {
+      params: {
+        id: fileName.replace(/\.md$/, ''),
+      },
+    };
   });
 }
