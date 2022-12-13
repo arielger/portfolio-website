@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { Container, Heading, Stack } from '@chakra-ui/react';
 import Image from 'next/image';
 
+import ActiveLink from './ActiveLink';
+
 export default function Header() {
   return (
     <Container maxW="container.lg" mt={20} mb={10}>
@@ -11,9 +13,11 @@ export default function Header() {
         alignItems={'center'}
         justifyContent="space-between"
       >
-        <Heading as="h1" size="lg" fontWeight={500}>
-          Ariel Gerstein
-        </Heading>
+        <Link href="/">
+          <Heading as="h1" size="lg" fontWeight={500}>
+            Ariel Gerstein
+          </Heading>
+        </Link>
 
         <Stack as="nav" direction="row">
           <Stack
@@ -24,13 +28,15 @@ export default function Header() {
             mr={6}
           >
             <li>
-              <Link href="/">Home</Link>
+              <ActiveLink equals href="/">
+                Home
+              </ActiveLink>
             </li>
             {/* <li>
-              <Link href="/about">About</Link>
+              <ActiveLink href="/about">About</ActiveLink>
             </li> */}
             <li>
-              <Link href="/blog">Blog</Link>
+              <ActiveLink href="/blog">Blog</ActiveLink>
             </li>
           </Stack>
           <Stack as="ul" direction="row" listStyleType={'none'} spacing={6}>
