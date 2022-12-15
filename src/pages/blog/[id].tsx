@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import { getAllPostIds, getPostData } from '@/utils/posts';
 import { IPost } from '@/types/blog';
 import { Box, Container, Heading } from '@chakra-ui/react';
@@ -30,6 +31,9 @@ export const getStaticProps: GetStaticProps<
 export default function Post({ post }: StaticProps) {
   return (
     <Container maxW="container.lg" mt={20} mb={10}>
+      <Head>
+        <title>{post.title} | Ariel Gerstein blog</title>
+      </Head>
       <Box mb={10}>
         <Heading as="h1" fontWeight={500} mb={4}>
           {post.title}
