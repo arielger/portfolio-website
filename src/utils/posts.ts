@@ -37,15 +37,9 @@ export async function getPostData(id: string) {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content);
-  const contentHtml = processedContent.toString();
-
   return {
     id,
-    contentHtml,
+    markdown: matterResult.content,
     ...matterResult.data,
   } as IPost;
 }
