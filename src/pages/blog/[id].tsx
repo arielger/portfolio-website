@@ -6,6 +6,7 @@ import { Box, Container, Heading } from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import rehypeRaw from 'rehype-raw';
 
 interface StaticProps {
   post: IPost;
@@ -44,9 +45,11 @@ export default function Post({ post }: StaticProps) {
         <span>{post.date}</span>
       </Box>
       <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
         components={{
           ...ChakraUIRenderer(),
-          code({ inline, className, children, ...props }) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          code({ inline, className, children, style, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
             return !inline && match ? (
               <SyntaxHighlighter
@@ -63,7 +66,6 @@ export default function Post({ post }: StaticProps) {
             );
           },
         }}
-        skipHtml
       >
         {post.markdown}
       </ReactMarkdown>

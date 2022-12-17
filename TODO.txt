@@ -1,3 +1,8 @@
 - [x] Fix heading styles in markdown content
 - [x] Add code snippet styles in markdown
+- [ ] Add iframes support
+- [ ] Fix chrome console + terminal warnings
+- [ ] Fix titles styles
 - [ ] Add links support
+- [ ] Add p5 sketches post with examples
+- [ ] Add google analytics support

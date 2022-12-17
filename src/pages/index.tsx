@@ -23,7 +23,7 @@ export default function Home({ posts }: StaticProps) {
   return (
     <div>
       <Head>
-        <title>Ariel gerstein - Javascript developer</title>
+        <title>Ariel Gerstein | Javascript developer</title>
         <meta
           name="description"
           content="Front-end engineer specialized in React and Typescript"
