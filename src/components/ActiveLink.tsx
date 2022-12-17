@@ -13,26 +13,13 @@ export default function ActiveLink({
   equals,
   ...props
 }: PropsWithChildren<ActiveLinkProps>) {
-  const { asPath, isReady } = useRouter();
+  const { pathname } = useRouter();
 
   const isActive = useMemo(() => {
-    // Check if the router fields are updated client-side
-    if (isReady) {
-      // Dynamic route will be matched via props.as
-      // Static route will be matched via props.href
-      const linkPathname = new URL(
-        (props.as || props.href) as string,
-        location.href,
-      ).pathname;
-
-      // Using URL().pathname to get rid of query and hash
-      const activePathname = new URL(asPath, location.href).pathname;
-
-      return equals
-        ? linkPathname === activePathname
-        : activePathname.startsWith(linkPathname);
-    }
-  }, [isReady, props.as, props.href, asPath, equals]);
+    return equals
+      ? props.href === pathname
+      : pathname.startsWith(props.href as string);
+  }, [equals, props.href, pathname]);
 
   return (
     <NextLink {...props} passHref legacyBehavior>
