@@ -23,4 +23,4 @@ Learned about: Gaussian distribution
 
 ### Resources
 
-- P5 showcase - https://showcase.p5js.org/#/2022-All
+- [P5 2022 Showcase](https://showcase.p5js.org/#/2022-All)
