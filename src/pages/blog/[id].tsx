@@ -36,7 +36,7 @@ export default function Post({ post }: StaticProps) {
   return (
     <Container maxW="container.lg" mt={20} mb={10}>
       <Head>
-        <title>{post.title} | Ariel Gerstein blog</title>
+        <title>{`${post.title} | Ariel Gerstein blog`}</title>
       </Head>
       <Box mb={10}>
         <Heading as="h1" fontWeight={500} mb={4}>
