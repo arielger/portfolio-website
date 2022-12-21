@@ -2,5 +2,6 @@
 - [x] Add code snippet styles in markdown
 - [x] Add iframes support
 - [x] Fix chrome console + terminal warnings
+- [x] Add analytics support
+- [ ] Add about page
 - [ ] Fix titles styles
-- [ ] Add google analytics support
