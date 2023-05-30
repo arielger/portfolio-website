@@ -1,17 +1,13 @@
 import Head from 'next/head';
 import { Container, Heading, Box } from '@chakra-ui/react';
-import { GetStaticProps } from 'next';
+import { InferGetStaticPropsType } from 'next';
 
-import { getSortedPostsData } from '@/utils/posts';
-import { IPost } from '@/types/blog';
+import { getOrderedPosts } from '@/modules/posts/api';
 import BlogPosts from '@/components/BlogPosts';
 
-interface StaticProps {
-  posts: IPost[];
-}
+export const getStaticProps = async () => {
+  const posts = await getOrderedPosts();
 
-export const getStaticProps: GetStaticProps<StaticProps> = async () => {
-  const posts = getSortedPostsData();
   return {
     props: {
       posts,
@@ -19,7 +15,9 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   };
 };
 
-export default function Home({ posts }: StaticProps) {
+export default function Home({
+  posts,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
       <Head>
@@ -49,7 +47,7 @@ export default function Home({ posts }: StaticProps) {
         <Heading as="h3" fontWeight={500} fontSize="2xl" mt={20} mb={10}>
           Latests articles
         </Heading>
-        <BlogPosts posts={posts} />
+        <BlogPosts posts={posts ?? []} />
       </Container>
     </div>
   );

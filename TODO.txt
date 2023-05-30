@@ -3,5 +3,10 @@
 - [x] Add iframes support
 - [x] Fix chrome console + terminal warnings
 - [x] Add analytics support
+- [ ] Add CMS (tina cms)
+    - [x] fix page url
+    - [x] Fix markdown rendering
+    - [x] order posts by date
+    - [ ] check remote posts change
 - [ ] Add about page
 - [ ] Fix titles styles

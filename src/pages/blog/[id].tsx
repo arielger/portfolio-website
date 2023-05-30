@@ -1,35 +1,47 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import { getAllPostIds, getPostData } from '@/utils/posts';
-import { IPost } from '@/types/blog';
 import { Box, Container, Heading } from '@chakra-ui/react';
-import ReactMarkdown from 'react-markdown';
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import { TinaMarkdown } from 'tinacms/dist/rich-text';
+import { Prose } from '@nikolovlazar/chakra-ui-prose';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import rehypeRaw from 'rehype-raw';
+
+import { FormattedPost } from '@/modules/posts/types';
+
+import { getPostByUrl, getPostsUrls } from '@/modules/posts/api';
 
 interface StaticProps {
-  post: IPost;
+  post: FormattedPost;
 }
 
-export async function getStaticPaths() {
-  const paths = getAllPostIds();
+export const getStaticPaths = async () => {
+  const postsUrls = await getPostsUrls();
+
   return {
-    paths,
+    paths: (postsUrls ?? []).map((url) => ({
+      params: { id: url },
+    })),
     fallback: false,
   };
-}
+};
 
 export const getStaticProps: GetStaticProps<
   StaticProps,
   { id: string }
 > = async ({ params }) => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const post = await getPostData(params!.id);
+  const post = await getPostByUrl(params?.id ?? '');
 
   return {
-    props: { post },
+    props: {
+      post,
+    },
   };
+};
+
+const Html = (props: { value: any } | undefined) => {
+  if (!props?.value) {
+    return <></>;
+  }
+  return <div dangerouslySetInnerHTML={{ __html: props.value }} />;
 };
 
 export default function Post({ post }: StaticProps) {
@@ -44,31 +56,23 @@ export default function Post({ post }: StaticProps) {
         </Heading>
         <span>{post.date}</span>
       </Box>
-      <ReactMarkdown
-        rehypePlugins={[rehypeRaw]}
-        components={{
-          ...ChakraUIRenderer(),
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          code({ inline, className, children, style, ...props }) {
-            const match = /language-(\w+)/.exec(className || '');
-            return !inline && match ? (
-              <SyntaxHighlighter
-                // eslint-disable-next-line react/no-children-prop
-                children={String(children).replace(/\n$/, '')}
-                language={match[1]}
-                PreTag="div"
-                {...props}
-              />
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            );
-          },
-        }}
-      >
-        {post.markdown}
-      </ReactMarkdown>
+      <Prose>
+        <TinaMarkdown
+          content={post.body}
+          components={{
+            html: Html,
+            code_block: (props) => {
+              if (!props?.value) return <></>;
+
+              return (
+                <SyntaxHighlighter language={props?.lang} PreTag="div">
+                  {props?.value}
+                </SyntaxHighlighter>
+              );
+            },
+          }}
+        />
+      </Prose>
     </Container>
   );
 }
