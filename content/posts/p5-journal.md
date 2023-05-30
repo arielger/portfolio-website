@@ -3,7 +3,7 @@ title: P5.js learning journal
 date: 2022-12-12T00:00:00.000Z
 ---
 
-I decided to start learning creative coding and p5 is one of the best libraries I found for this. For this reason, I will be leaving here some quick guides and tips I learn along the way.
+I decided to start learning **creative coding** and p5 is one of the best libraries I found for this. For this reason, I will be leaving here some quick guides and tips I learn along the way.
 
 ### Sketches
 
@@ -25,4 +25,4 @@ Learned about: WEBGL, Vectors
 
 ### Resources
 
-- [P5 2022 Showcase](https://showcase.p5js.org/#/2022-All)
+* [P5 2022 Showcase](https://showcase.p5js.org/#/2022-All)
